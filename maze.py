@@ -13,7 +13,7 @@ class Maze:
         num_cols,
         cell_size_x,
         cell_size_y,
-        win: Window,
+        win: Window = None,
     ):
         self.__cells = []
         self.__x1 = x1
