@@ -1,6 +1,5 @@
 import unittest
 
-# assuming your `Maze` class is in a file called `maze.py`
 from maze import Maze
 
 
@@ -16,6 +15,30 @@ class Tests(unittest.TestCase):
         self.assertEqual(
             len(m1._Maze__cells[0]),
             num_rows,
+        )
+
+    def test_maze_create_cells_large(self):
+        num_cols = 16
+        num_rows = 12
+        m1 = Maze(0, 0, num_rows, num_cols, 10, 10)
+        self.assertEqual(
+            len(m1._Maze__cells),
+            num_cols,
+        )
+        self.assertEqual(
+            len(m1._Maze__cells[0]),
+            num_rows,
+        )
+
+    def test_maze_break_entrace_and_exit(self):
+        num_cols = 16
+        num_rows = 12
+        m1 = Maze(0, 0, num_rows, num_cols, 10, 10)
+        self.assertFalse(m1._Maze__cells[0][0].has_top_wall)
+        self.assertFalse(
+            m1._Maze__cells[m1._Maze__num_cols - 1][
+                m1._Maze__num_rows - 1
+            ].has_bottom_wall
         )
 
 
