@@ -119,3 +119,19 @@ class Maze:
         for col in range(len(self.__cells)):
             for row in range(len(self.__cells[0])):
                 self.__cells[col][row].visited = False
+
+    def __solve_r(self, i=0, j=0) -> bool:
+        self.__animate()
+        self.__cells[i][j].visited = True
+        if self.__cells[self.__num_cols - 1][self.__num_rows - 1].visited:
+            return True
+        # TODO for each direction here...
+        else:
+            return False
+
+
+def solve(x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None):
+    maze = Maze(
+        x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None
+    )
+    return maze.__solve_r(0, 0)
