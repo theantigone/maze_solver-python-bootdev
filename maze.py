@@ -25,13 +25,14 @@ class Maze:
         self.__win = win
 
         self.__create_cells()
+        self.__break_entrance_and_exit()
 
     def __create_cells(self):
         for i in range(self.__num_cols):
             col_cells = []
             self.__cells.append(
                 col_cells
-            )  # can append immediately, because calling `col_cells` again will refer to that specific object, not overwrite that object with a new object
+            )  # can append immediately, because calling `col_cells` again (in a couple of lines down) will refer to that specific object, not overwrite that object with a new object
             for j in range(self.__num_rows):
                 col_cells.append(Cell(self.__win))
                 self.__draw_cell(i, j)
@@ -51,7 +52,6 @@ class Maze:
             return
         self.__win.redraw()
         time.sleep(0.05)
-        self.__break_entrance_and_exit()
 
     def __break_entrance_and_exit(self):
         self.__cells[0][0].has_top_wall = False
