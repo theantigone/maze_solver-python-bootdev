@@ -126,8 +126,8 @@ class Maze:
         self.__animate()
         self.__cells[i][j].visited = True
         # if self.__cells[i][j] == self.__cells[self.__num_cols - 1][self.__num_rows - 1]:
-        # if i == self.__num_cols - 1 and j == self.__num_rows - 1:
-        if self.__cells[self.__num_cols - 1][self.__num_rows - 1].visited:
+        # if self.__cells[self.__num_cols - 1][self.__num_rows - 1].visited:
+        if i == self.__num_cols - 1 and j == self.__num_rows - 1:
             print("success")
             return True
         # right
