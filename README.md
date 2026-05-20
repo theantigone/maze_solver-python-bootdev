@@ -63,5 +63,5 @@ If `python3 -m tkinter` still isn't working, try uninstalling and reinstalling P
 ## dates
 
 - started: 5/14/2026 ~9:30 am est
-- finished:
+- finished: 5/20/2026 11:57 am est
 
