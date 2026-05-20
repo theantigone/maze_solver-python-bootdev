@@ -25,6 +25,7 @@ class Maze:
         self.__cell_size_x = cell_size_x
         self.__cell_size_y = cell_size_y
         self.__win = win
+        self.__seed = seed
         if seed:
             random.seed(seed)
 
@@ -58,6 +59,7 @@ class Maze:
             return
         self.__win.redraw()
         time.sleep(0.05)
+        # time.sleep(0.01)
 
     def __break_entrance_and_exit(self):
         self.__cells[0][0].has_top_wall = False
@@ -125,13 +127,56 @@ class Maze:
         self.__cells[i][j].visited = True
         if self.__cells[self.__num_cols - 1][self.__num_rows - 1].visited:
             return True
-        # TODO for each direction here...
-        else:
-            return False
+        # right
+        if (
+            i < self.__num_cols - 1
+            and not self.__cells[i][j].has_right_wall
+            and not self.__cells[i + 1][j].has_left_wall
+            and not self.__cells[i + 1][j].visited
+        ):
+            self.__cells[i][j].draw_move(self.__cells[i + 1][j])
+            if self.__solve_r(i + 1, j):
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i + 1][j], True)
+        # left
+        if (
+            i > 0
+            and not self.__cells[i][j].has_left_wall
+            and not self.__cells[i - 1][j].has_right_wall
+            and not self.__cells[i - 1][j].visited
+        ):
+            self.__cells[i][j].draw_move(self.__cells[i - 1][j])
+            if self.__solve_r(i - 1, j):
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i - 1][j], True)
+        # down
+        if (
+            j < self.__num_rows - 1
+            and not self.__cells[i][j].has_bottom_wall
+            and not self.__cells[i][j + 1].has_top_wall
+            and not self.__cells[i][j + 1].visited
+        ):
+            self.__cells[i][j].draw_move(self.__cells[i][j + 1])
+            if self.__solve_r(i, j + 1):
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i][j + 1], True)
+        # up
+        if (
+            j > 0
+            and not self.__cells[i][j].has_top_wall
+            and not self.__cells[i][j - 1].has_bottom_wall
+            and not self.__cells[i][j - 1].visited
+        ):
+            self.__cells[i][j].draw_move(self.__cells[i][j - 1])
+            if self.__solve_r(i, j - 1):
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i][j - 1], True)
+        print("fail")
+        return False
 
-
-def solve(x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None):
-    maze = Maze(
-        x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None
-    )
-    return maze.__solve_r(0, 0)
+    def solve(self) -> bool:
+        return self.__solve_r(0, 0)
